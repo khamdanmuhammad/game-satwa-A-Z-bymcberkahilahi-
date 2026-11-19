@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dunia Satwa A-Z</title>
+<script>
+/* Sembunyikan peringatan Tailwind CDN di console */
+(function(){var w=console.warn;console.warn=function(){var a=arguments[0];if(typeof a==='string'&&a.indexOf('cdn.tailwindcss.com')>-1)return;w.apply(console,arguments)}})();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body{font-family:'Baloo 2','Comic Sans MS',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+  body{background:linear-gradient(180deg,#fde047 0%,#fdba74 60%,#86efac 100%);min-height:100vh}
+  .screen{display:none}.screen.on{display:flex;animation:pop .4s ease}
+  @keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+  @keyframes bounce2{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+  @keyframes fall{from{transform:translateY(-10vh) rotate(0);opacity:1}to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+  @keyframes flip{from{transform:rotateY(90deg)}to{transform:rotateY(0)}}
+  .bob{animation:bounce2 1.6s ease-in-out infinite}
+  .shake{animation:shake .4s}
+  .flip{animation:flip .35s ease}
+  .star{position:fixed;top:0;z-index:50;pointer-events:none;animation:fall 2.2s linear forwards}
+  .btn{transition:transform .15s;box-shadow:0 6px 0 rgba(0,0,0,.18)}
+  .btn:active{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+</style>
+</head>
+<body class="text-slate-800">
+<div class="max-w-3xl mx-auto px-4 py-5 min-h-screen flex flex-col justify-center">
+
+  <!-- GERBANG PASSWORD -->
+  <section id="gate" class="screen on flex-col items-center text-center gap-4">
+    <div class="text-8xl bob">🦁</div>
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-[0_3px_0_rgba(0,0,0,.25)]">Dunia Satwa A-Z</h1>
+    <div class="bg-white/90 rounded-3xl p-6 w-full max-w-sm shadow-xl">
+      <p class="font-bold text-lg mb-3">🔒 Masukkan password dari pembelian di winme.id</p>
+      <input id="pw" type="password" autocomplete="off" placeholder="Password"
+        class="w-full text-center text-xl rounded-2xl border-4 border-amber-300 px-4 py-3 outline-none focus:border-orange-400">
+      <p id="pwErr" class="text-red-600 font-bold mt-2 h-6"></p>
+      <button id="pwBtn" class="btn mt-2 w-full bg-green-500 text-white text-2xl font-extrabold rounded-2xl py-3">Masuk 🚀</button>
+    </div>
+  </section>
+
+  <!-- MENU UTAMA -->
+  <section id="menu" class="screen flex-col items-center text-center gap-5">
+    <div class="text-7xl bob">🐘 🦒 🐧</div>
+    <h1 class="text-4xl sm:text-6xl font-extrabold text-white drop-shadow-[0_3px_0_rgba(0,0,0,.25)]">Dunia Satwa A-Z</h1>
+    <p class="text-lg font-bold">Ayo belajar huruf dan nama hewan!</p>
+    <button data-go="learn" class="btn w-full max-w-md bg-pink-500 text-white text-2xl sm:text-3xl font-extrabold rounded-3xl py-6">📚 Belajar Flashcard</button>
+    <button data-go="quiz" class="btn w-full max-w-md bg-sky-500 text-white text-2xl sm:text-3xl font-extrabold rounded-3xl py-6">🎮 Main Kuis Tebak Hewan</button>
+  </section>
+
+  <!-- FLASHCARD -->
+  <section id="learn" class="screen flex-col items-center gap-3">
+    <div class="w-full flex justify-between items-center">
+      <button data-go="menu" class="btn bg-white rounded-2xl px-4 py-2 font-extrabold text-lg">🏠 Menu</button>
+      <span id="lCount" class="bg-white/80 rounded-2xl px-4 py-2 font-extrabold"></span>
+    </div>
+    <div id="card" class="w-full max-w-md bg-white rounded-[2rem] border-8 border-dashed border-amber-400 shadow-2xl p-4 text-center cursor-pointer select-none">
+      <div id="cLetter" class="text-8xl sm:text-9xl font-extrabold text-orange-500 leading-none"></div>
+      <div id="cEmoji" class="text-[8rem] sm:text-[10rem] leading-tight bob"></div>
+      <div id="cName" class="text-4xl sm:text-5xl font-extrabold tracking-wide"></div>
+      <p class="text-sm font-bold text-slate-400 mt-1">Ketuk kartu untuk mendengar suara 🔊</p>
+    </div>
+    <div class="flex gap-3 w-full max-w-md">
+      <button id="prev" class="btn flex-1 bg-orange-400 text-white text-xl font-extrabold rounded-2xl py-4">⬅️ Sebelumnya</button>
+      <button id="speak" class="btn bg-yellow-400 text-3xl rounded-2xl px-5">🔊</button>
+      <button id="next" class="btn flex-1 bg-green-500 text-white text-xl font-extrabold rounded-2xl py-4">Selanjutnya ➡️</button>
+    </div>
+    <div id="grid" class="grid grid-cols-7 sm:grid-cols-9 gap-2 w-full max-w-md"></div>
+  </section>
+
+  <!-- KUIS -->
+  <section id="quiz" class="screen flex-col items-center gap-3">
+    <div class="w-full flex justify-between items-center gap-2">
+      <button data-go="menu" class="btn bg-white rounded-2xl px-4 py-2 font-extrabold text-lg">🏠 Menu</button>
+      <div class="flex gap-2 font-extrabold">
+        <span class="bg-green-500 text-white rounded-2xl px-3 py-2">✅ <b id="qOk">0</b></span>
+        <span class="bg-red-500 text-white rounded-2xl px-3 py-2">❌ <b id="qNo">0</b></span>
+        <span class="bg-yellow-300 rounded-2xl px-3 py-2">⭐ <b id="qSc">0</b></span>
+      </div>
+    </div>
+    <p id="qNum" class="font-extrabold"></p>
+    <div id="qBox" class="w-full max-w-md bg-white rounded-[2rem] shadow-2xl p-5 text-center">
+      <p id="qText" class="text-2xl font-extrabold mb-2"></p>
+      <div id="qShow" class="text-[8rem] leading-tight"></div>
+    </div>
+    <div id="qOpts" class="grid gap-3 w-full max-w-md"></div>
+  </section>
+
+  <!-- HASIL -->
+  <section id="result" class="screen flex-col items-center text-center gap-4">
+    <div id="rStars" class="text-6xl bob"></div>
+    <h2 class="text-4xl font-extrabold text-white drop-shadow-[0_3px_0_rgba(0,0,0,.25)]">Kuis Selesai!</h2>
+    <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-xl text-xl font-bold">
+      <p>✅ Benar: <b id="rOk"></b></p><p>❌ Salah: <b id="rNo"></b></p>
+      <p class="text-3xl mt-2">⭐ Skor: <b id="rSc"></b></p>
+    </div>
+    <button id="again" class="btn w-full max-w-sm bg-sky-500 text-white text-2xl font-extrabold rounded-3xl py-4">🔁 Main Lagi</button>
+    <button data-go="menu" class="btn w-full max-w-sm bg-white text-2xl font-extrabold rounded-3xl py-4">🏠 Menu Utama</button>
+  </section>
+</div>
+
+<script>
+(function(){
+'use strict';
+var PASS_HASH = 342234375386255; // hash dari password (bukan teks asli)
+var ANIMALS = [
+ ['A','Ayam','🐔'],['B','Bebek','🦆'],['C','Cicak','🦎'],['D','Domba','🐑'],['E','Elang','🦅'],
+ ['F','Flamingo','🦩'],['G','Gajah','🐘'],['H','Harimau','🐯'],['I','Ikan','🐟'],['J','Jerapah','🦒'],
+ ['K','Kucing','🐱'],['L','Lumba-Lumba','🐬'],['M','Monyet','🐵'],['N','Nuri','🦜'],['O','Orangutan','🦧'],
+ ['P','Pinguin','🐧'],['Q','Quokka','🐹'],['R','Rusa','🦌'],['S','Sapi','🐄'],['T','Tupai','🐿️'],
+ ['U','Ular','🐍'],['V','Vicuna','🦙'],['W','Walrus','🦭'],['X','Xenopus','🐸'],['Y','Yak','🦬'],['Z','Zebra','🦓']
+].map(function(a){return {l:a[0],n:a[1],e:a[2]}});
+
+var $=function(id){return document.getElementById(id)};
+function hash(s,seed){seed=seed===undefined?7:seed;var h1=0xdeadbeef^seed,h2=0x41c6ce57^seed,ch;
+  for(var i=0;i<s.length;i++){ch=s.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}
+  h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);
+  h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);
+  return 4294967296*(2097151&h2)+(h1>>>0)}
+function store(k,v){try{if(v===undefined)return sessionStorage.getItem(k);sessionStorage.setItem(k,v)}catch(e){return null}}
+
+/* Navigasi */
+function show(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on')});
+  $(id).classList.add('on'); window.scrollTo(0,0);
+  if(id==='learn')renderCard(false); if(id==='quiz')startQuiz();
+  if(id==='menu'&&window.speechSynthesis)speechSynthesis.cancel();
+}
+document.querySelectorAll('[data-go]').forEach(function(b){b.onclick=function(){show(b.dataset.go)}});
+
+/* Password */
+function tryLogin(){
+  if(hash($('pw').value.trim())===PASS_HASH){store('ok','1');show('menu')}
+  else{$('pwErr').textContent='Password salah, coba lagi ya 🙏';$('pw').classList.add('shake');
+    setTimeout(function(){$('pw').classList.remove('shake')},400)}
+}
+$('pwBtn').onclick=tryLogin;
+$('pw').onkeydown=function(e){if(e.key==='Enter')tryLogin()};
+if(store('ok')==='1')show('menu');
+
+/* Suara */
+var voice=null;
+function pickVoice(){if(!window.speechSynthesis)return;
+  var v=speechSynthesis.getVoices();
+  voice=v.filter(function(x){return /^id/i.test(x.lang)})[0]||null}
+if(window.speechSynthesis){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function say(t){
+  if(!window.speechSynthesis)return;
+  try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);
+    u.lang='id-ID';if(voice)u.voice=voice;u.rate=.85;u.pitch=1.2;speechSynthesis.speak(u)}catch(e){}
+}
+
+/* Flashcard */
+var idx=0;
+var grid=$('grid');
+ANIMALS.forEach(function(a,i){
+  var b=document.createElement('button');
+  b.textContent=a.l;
+  b.className='btn bg-white rounded-xl py-2 font-extrabold text-lg';
+  b.onclick=function(){idx=i;renderCard(true)};
+  grid.appendChild(b);
+});
+function renderCard(speak){
+  var a=ANIMALS[idx];
+  $('cLetter').textContent=a.l;$('cEmoji').textContent=a.e;$('cName').textContent=a.n.toUpperCase();
+  $('lCount').textContent=(idx+1)+' / 26';
+  var c=$('card');c.classList.remove('flip');void c.offsetWidth;c.classList.add('flip');
+  Array.prototype.forEach.call(grid.children,function(b,i){
+    b.classList.toggle('bg-orange-400',i===idx);b.classList.toggle('text-white',i===idx);
+    b.classList.toggle('bg-white',i!==idx)});
+  if(speak)say(a.l+'... '+a.n+'!');
+}
+function speakCard(){var a=ANIMALS[idx];say(a.l+'... '+a.n+'!')}
+$('prev').onclick=function(){idx=(idx+25)%26;renderCard(true)};
+$('next').onclick=function(){idx=(idx+1)%26;renderCard(true)};
+$('speak').onclick=speakCard;$('card').onclick=speakCard;
+
+/* Kuis */
+var TOTAL=10,q={n:0,ok:0,no:0,sc:0,ans:null,locked:false,used:[]};
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function startQuiz(){q={n:0,ok:0,no:0,sc:0,ans:null,locked:false,used:[]};nextQ()}
+function nextQ(){
+  if(q.n>=TOTAL){return finish()}
+  q.locked=false;
+  var pool=ANIMALS.filter(function(a){return q.used.indexOf(a.l)<0});
+  var ans=pool[Math.floor(Math.random()*pool.length)];q.used.push(ans.l);q.ans=ans;
+  var opts=shuffle([ans].concat(shuffle(ANIMALS.filter(function(a){return a!==ans})).slice(0,2)));
+  var byLetter=q.n%2===1;
+  $('qNum').textContent='Soal '+(q.n+1)+' dari '+TOTAL;
+  $('qText').textContent=byLetter?'Hewan apa yang berawalan huruf ini?':'Ini hewan apa?';
+  var s=$('qShow');
+  s.textContent=byLetter?ans.l:ans.e;
+  s.className=byLetter?'text-[8rem] leading-tight font-extrabold text-orange-500':'text-[8rem] leading-tight bob';
+  var box=$('qOpts');box.innerHTML='';
+  var colors=['bg-pink-500','bg-sky-500','bg-purple-500'];
+  opts.forEach(function(o,i){
+    var b=document.createElement('button');
+    b.className='btn '+colors[i]+' text-white text-2xl sm:text-3xl font-extrabold rounded-2xl py-4';
+    b.textContent=(byLetter?o.e+' ':'')+o.n;
+    b.dataset.n=o.n;
+    b.onclick=function(){answer(o,b)};
+    box.appendChild(b);
+  });
+  upd();
+  say(byLetter?'Hewan apa yang berawalan huruf '+ans.l+'?':'Ini hewan apa?');
+}
+function upd(){$('qOk').textContent=q.ok;$('qNo').textContent=q.no;$('qSc').textContent=q.sc}
+function recolor(b,c,extra){b.className=b.className.replace(/bg-\w+-500/,c)+' '+(extra||'')}
+function answer(o,btn){
+  if(q.locked)return;q.locked=true;
+  var btns=$('qOpts').children;
+  if(o===q.ans){
+    q.ok++;q.sc+=10;recolor(btn,'bg-green-500','ring-8 ring-yellow-300');
+    confetti();say('Hebat! '+q.ans.l+'... '+q.ans.n+'!');
+  }else{
+    q.no++;recolor(btn,'bg-red-500','shake opacity-70');
+    Array.prototype.forEach.call(btns,function(b){
+      if(b.dataset.n===q.ans.n)recolor(b,'bg-green-500','ring-8 ring-yellow-300')});
+    say('Ups! Jawabannya '+q.ans.n);
+  }
+  upd();q.n++;setTimeout(nextQ,2000);
+}
+function confetti(){
+  var em=['⭐','🌟','✨','🎉','🎈'];
+  for(var i=0;i<28;i++){
+    var s=document.createElement('div');s.className='star';
+    s.textContent=em[i%em.length];
+    s.style.left=Math.random()*100+'vw';s.style.fontSize=(20+Math.random()*28)+'px';
+    s.style.animationDelay=Math.random()*.6+'s';
+    document.body.appendChild(s);
+    (function(x){setTimeout(function(){x.remove()},3200)})(s);
+  }
+}
+function finish(){
+  show('result');
+  $('rOk').textContent=q.ok;$('rNo').textContent=q.no;$('rSc').textContent=q.sc;
+  var st=q.ok>=8?3:q.ok>=5?2:1;
+  $('rStars').textContent='⭐'.repeat(st)+'☆'.repeat(3-st);
+  confetti();
+  say(q.ok>=8?'Luar biasa! Kamu pintar sekali!':'Bagus! Ayo coba lagi!');
+}
+$('again').onclick=function(){show('quiz')};
+})();
+</script>
+</body>
+</html>
